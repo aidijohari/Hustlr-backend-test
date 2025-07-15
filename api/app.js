@@ -21,6 +21,14 @@ const product = require('./routes/productRoute');
 const order = require('./routes/orderRoute');
 const payment = require('./routes/paymentRoute');
 
+// changes start:
+const productRoutes = require('./routes/products');
+
+app.use(express.json());
+app.use('/products', productRoutes);
+console.log("➡️  /products route registered");
+// end
+
 app.use('/api/v1', user);
 app.use('/api/v1', product);
 app.use('/api/v1', order);
@@ -39,6 +47,10 @@ if (process.env.NODE_ENV === 'production') {
         res.send('Server is Running! 🚀');
     });
 }
+
+app.get('/', (req, res) => {
+  res.send('Server is Running! 🚀');
+});
 
 // error middleware
 // app.use(errorMiddleware);

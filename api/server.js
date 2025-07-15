@@ -1,5 +1,5 @@
 const app = require('./app');
-const connectDatabase = require('./config/database');
+// const connectDatabase = require('./config/database');
 const cloudinary = require('cloudinary');
 const PORT = process.env.PORT || 4001;
 
@@ -11,20 +11,23 @@ process.on('uncaughtException', (err) => {
 
 // connectDatabase();
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+// cloudinary.config({
+//     cloud_name: process.env.CLOUDINARY_NAME,
+//     api_key: process.env.CLOUDINARY_API_KEY,
+//     api_secret: process.env.CLOUDINARY_API_SECRET,
+// });
 
 const server = app.listen(PORT, () => {
-    console.log(`Server running`)
+    console.log(`➡️  Server running on port ${PORT}`)
 });
+
+server.on('listening', () => console.log('➡️  Server actively listening'));
 
 // Unhandled Promise Rejection
 process.on('unhandledRejection', (err) => {
     console.log(`Error: ${err.message}`);
-    server.close(() => {
-        process.exit(1);
-    });
+    console.error('🛑 Unhandled Rejection:', err); //not displaying the unhandledRejection error for some reason. quietly shutting down server so commented out server.close()
+    // server.close(() => {
+    //     process.exit(1);
+    // });
 });
